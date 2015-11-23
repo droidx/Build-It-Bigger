@@ -2,16 +2,15 @@ package com.udacity.gradle.builditbigger;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.udacity.gradle.jokedisplay.JokeDisplayActivity;
-import com.udacity.gradle.jokes.JokeTeller;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity implements Callback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +41,16 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void tellJoke(View view){
-        JokeTeller jokeTeller = new JokeTeller();
-        final String joke = jokeTeller.tellJoke();
+    public void tellJoke(View view) {
+        // JokeTeller jokeTeller = new JokeTeller();
+        // final String joke = jokeTeller.tellJoke();
+        new JokeEndPointAsyncTask(this).execute();
+    }
+
+    @Override
+    public void onProcessFinished(boolean success, String joke) {
         Intent intent = new Intent(this, JokeDisplayActivity.class);
         intent.putExtra(Intent.EXTRA_TEXT, joke);
         startActivity(intent);
     }
-
-
 }
