@@ -17,7 +17,7 @@ public class JokeEndPointAsyncTask extends AsyncTask<Void, Void, String> {
     private static JokeApi jokeApiService;
     private Callback callback;
 
-    JokeEndPointAsyncTask(Callback callback) {
+    public JokeEndPointAsyncTask(Callback callback) {
         this.callback = callback;
     }
 
