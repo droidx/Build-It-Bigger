@@ -14,6 +14,7 @@ import java.io.IOException;
  */
 public class JokeEndPointAsyncTask extends AsyncTask<Void, Void, String> {
 
+    private static final String TAG = JokeEndPointAsyncTask.class.getSimpleName();
     private static JokeApi jokeApiService;
     private Callback callback;
 
@@ -33,8 +34,8 @@ public class JokeEndPointAsyncTask extends AsyncTask<Void, Void, String> {
         try {
             return jokeApiService.tellJoke().execute().getJoke();
         } catch (IOException e) {
-            Log.d("exception ", e.getMessage());
-            return e.getMessage();
+            Log.d(TAG, e.getMessage());
+            return null;
         }
     }
 

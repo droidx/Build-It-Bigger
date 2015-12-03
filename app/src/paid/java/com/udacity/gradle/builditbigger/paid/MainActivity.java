@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.udacity.gradle.builditbigger.Callback;
 import com.udacity.gradle.builditbigger.JokeEndPointAsyncTask;
@@ -15,45 +16,29 @@ import com.udacity.gradle.jokedisplay.JokeDisplayActivity;
 
 public class MainActivity extends AppCompatActivity implements Callback {
 
+    private ProgressBar spinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        spinner = (ProgressBar) findViewById(R.id.progress_bar);
     }
 
     public void tellJoke(View view) {
-        // JokeTeller jokeTeller = new JokeTeller();
-        // final String joke = jokeTeller.tellJoke();
+        spinner.setVisibility(View.VISIBLE);
         new JokeEndPointAsyncTask(this).execute();
     }
 
     @Override
     public void onProcessFinished(boolean success, String joke) {
-        Intent intent = new Intent(this, JokeDisplayActivity.class);
-        intent.putExtra(Intent.EXTRA_TEXT, joke);
-        startActivity(intent);
+        spinner.setVisibility(View.GONE);
+        if (success) {
+            Intent intent = new Intent(this, JokeDisplayActivity.class);
+            intent.putExtra(Intent.EXTRA_TEXT, joke);
+            startActivity(intent);
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.failed_to_load_joke, Toast.LENGTH_LONG).show();
+        }
     }
 }
