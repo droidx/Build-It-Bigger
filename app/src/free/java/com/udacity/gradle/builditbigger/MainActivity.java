@@ -12,7 +12,11 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.udacity.gradle.jokedisplay.JokeDisplayActivity;
 
-
+/**
+ *
+ * <a href="https://developers.google.com/admob/android/interstitial?hl=en">Interstitial Ads</a>
+ * <a href="http://www.tutorialspoint.com/android/android_loading_spinner.htm>Spinner Tutorial</a>
+ */
 public class MainActivity extends AppCompatActivity implements Callback {
 
     private ProgressBar spinner;
